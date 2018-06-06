@@ -176,14 +176,15 @@ VALUES ('$course_id','$title','$filename','$lecturer_id','$desc','$video_id')");
                     ?>
                     <strong style="font-family:'Courier New', Courier, monospace;">Course
                         name: <?php echo $course; ?></strong><br>
-                    <strong style="font-family:'Courier New', Courier, monospace;">Title: <?php echo $title; ?></strong>
+                    <strong>Title: <?php echo $title; ?></strong>
 
 
 
-                            <?php
-                            echo "<video width='280' height='220' controls> <source src='. $pat . $location . ' type='video/mp4'>Your browser does not support the video tag.</source></video>"; ?>
+                    <video width="320" height="240" controls>
+                        <source src="C:/xampp/htdocs/virtualLearning/uploads/booyer.mp4" type="video/mp4">
 
-
+                        Your browser does not support the video tag.
+                    </video>
                     <div>
 
                         <a href="#">
