@@ -76,7 +76,7 @@
 
 				// get id of the created user
 				$logged_in_user_id = mysqli_insert_id($db);
-				$insert="INSERT INTO student (user_id) VALUES ('$logged_in_user_id')";
+				$insert="INSERT INTO student (user_id,	degree_id) VALUES ('$logged_in_user_id',1)";
 				mysqli_query($db,$insert);
 
 				$_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
@@ -175,9 +175,9 @@
 			return false;
 		}
 	}
-function isProvider()
+function isLecturer()
 {
-    if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'provider' ) {
+    if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'lecturer' ) {
         return true;
     }else{
         return false;

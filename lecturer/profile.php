@@ -1,7 +1,7 @@
 <?php
 include('../functions.php');
 include ('../conn.php');
-if (!isProvider()) {
+if (!isLecturer()) {
     $_SESSION['msg'] = "You must log in first";
     header('location: ../login.php');
 }

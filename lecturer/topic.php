@@ -1,33 +1,38 @@
-<?php 
-	include('../functions.php');
-	include ('../conn.php');
+<?php
+include('../functions.php');
+include ('../conn.php');
 
-	if (!isLecturer()) {
-		$_SESSION['msg'] = "You must log in first";
-		header('location: ../login.php');
-	}
+if (!isLecturer()) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: ../login.php');
+}
 $user = $_SESSION['user']['username'];
 $lecturer_id = $_SESSION['user']['id'];
 $sql ="select * from lecturer where user_id='$lecturer_id'";
 $result =mysqli_query($conn,$sql);
 $row=mysqli_fetch_array($result);
 $id=$row['id'];
+
+$sql ="select * from lecturer_courses where lecturer_id='$id'";
+$result =mysqli_query($conn,$sql);
+$row=mysqli_fetch_array($result);
+$course_id=$row['id'];
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Lecturer</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Lecturer</title>
 
-        <link href="assets/css/material.css" rel="stylesheet">
-        <!-- Custom CSS -->
-        <link href="assets/css/sb-admin.css" rel="stylesheet">
-        <link href="assets/css/style.css" rel="stylesheet">
-        <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="assets/css/material.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/sb-admin.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
 <div id="wrapper">
@@ -52,7 +57,7 @@ $id=$row['id'];
                 <li class="active">
                     <a href="home.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                 </li>
-                
+
                 <li>
                     <a href="topic.php"><i class="fa fa-fw fa-group"></i>Topic Discussions</a>
                 </li>
@@ -66,7 +71,7 @@ $id=$row['id'];
                     <a href="student.php"><i class="fa fa-fw fa-user"></i>Registered Students</a>
                 </li>
 
-               
+
                 <li>
                     <a href="home.php?logout='1'""><i class="fa fa-fw fa-power-off"></i> Logout</a>
                 </li>
@@ -87,7 +92,7 @@ $id=$row['id'];
                     </h4>
                     <ol class="breadcrumb">
                         <li class="active">
-                            <i class="fa fa-file"></i> Courses
+                            <i class="fa fa-file"></i> Students
                         </li>
                     </ol>
                 </div>
@@ -98,7 +103,7 @@ $id=$row['id'];
             <div class="panel panel-primary filterable">
                 <!-- Default panel contents -->
                 <div class="panel-heading">
-                    <h3 class="panel-title">Courses  </h3>
+                    <h3 class="panel-title">Registered Students </h3>
                     <div class="pull-right">
                         <button class="btn btn-default btn-xs btn-filter"><span class="fa fa-filter"></span> Filter</button>
                     </div>
@@ -108,30 +113,34 @@ $id=$row['id'];
                     <table class="table table-hover table-bordered">
                         <thead>
                         <tr class="filters">
+                            <th><input type="text" class="form-control" placeholder=" Firstname" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Surname" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Reg Number" disabled></th>
                             <th><input type="text" class="form-control" placeholder="Course Name" disabled></th>
                             <th><input type="text" class="form-control" placeholder="Course Code" disabled></th>
                             <th><input type="text" class="form-control" placeholder="Level" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Program" disabled></th>
 
 
                         </tr>
                         </thead>
 
                         <?php
-                        $sql = "SELECT c.name as coursename, c.code,c.level, d.name FROM lecturer_courses lc JOIN course c ON lc.course_id=c.id JOIN degree d ON c.degree_id = d.id WHERE lc.lecturer_id=1";
+                        $sql = "SELECT * FROM registration r JOIN student s ON r.student_id = s.id JOIN course c ON r.course_id=c.id  WHERE r.course_id='$course_id'";
                         $res = mysqli_query($conn, $sql);
                         if (!$res) {
                             printf("Error: %s\n", mysqli_error($conn));
                             exit();
                         }
                         while ($course = mysqli_fetch_array($res)) {
-
+//SELECT * FROM comments  c JOIN topic t ON c.`topic_id`=t.id JOIN course cs ON cs.id=t.course_id
                             echo "<tbody>";
                             echo "<tr>";
-                            echo "<td>" . $course['coursename'] . "</td>";
+                            echo "<td>" . $course['firstname'] . "</td>";
+                            echo "<td>" . $course['surname'] . "</td>";
+                            echo "<td>" . $course['regNumber'] . "</td>";
+                            echo "<td>" . $course['name'] . "</td>";
                             echo "<td>" . $course['code'] . "</td>";
                             echo "<td>" . $course['level'] . "</td>";
-                            echo "<td>" . $course['name'] . "</td>";
 
 
 
@@ -144,16 +153,16 @@ $id=$row['id'];
             </div>
             <!-- panel end -->
 
-       
-        <!-- jQuery -->
-        <script src="assets/js/jquery.js"></script>
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="assets/js/bootstrap.min.js"></script>
-        <!-- Latest compiled and minified JavaScript -->
-         <!-- script for jquery datatable start-->
+            <!-- jQuery -->
+            <script src="assets/js/jquery.js"></script>
 
-  
+            <!-- Bootstrap Core JavaScript -->
+            <script src="assets/js/bootstrap.min.js"></script>
+            <!-- Latest compiled and minified JavaScript -->
+            <!-- script for jquery datatable start-->
+
+
 
 </body>
 </html>

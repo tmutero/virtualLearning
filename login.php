@@ -25,8 +25,8 @@
            <h4>Log in</h4></center>
             <div class="panel-body">
                 <form role="form" method="post" action="login.php">
-                    <center> <img src="assets/images/app2.jpg" class="img-responsive" alt="logo" height="150px" width="200px"></center>
-                    <?php echo display_error(); ?>
+                    <center> <img src="assets1/img/bg2.jpg" class="img-responsive" alt="logo" height="300px" width="300px"></center>
+                    <?php echo display_error(); ?><br>
                     <fieldset>
                         <div class="form-group">
                             <input class="form-control" placeholder="username" name="username" type="text" autofocus="">

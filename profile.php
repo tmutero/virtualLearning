@@ -13,6 +13,12 @@ $run_select=mysqli_query($conn,$select);
 $row=mysqli_fetch_array($run_select);
 
 
+$select = "SELECT * FROM student WHERE user_id=" . $userId;
+$run_select = mysqli_query($conn, $select);
+$rows = mysqli_fetch_array($run_select);
+$student_id = $rows['id'];
+
+$student_name = $rows['firstname'];
 
 
 if (isset($_POST['submit'])) {
@@ -32,16 +38,6 @@ if (isset($_POST['submit'])) {
 
     header( 'Location: profile.php' ) ;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -71,7 +67,11 @@ if (isset($_POST['submit'])) {
                 <li role="presentation"><a href="index.php">Dashbord </a></li>
                 <li role="presentation"><a href="registration.php">Registration </a></li>
                 <li role="presentation"><a href="profile.php">Profile </a></li>
-                <li role="presentation"><a href="online.php">Online Virtual</a></li>
+                <li rel="presentation"><a href="#">Welcome ::<?php echo  $student_name;?></a> </li>
+
+
+
+
             </ul>
             <a href="index.php?logout='1"""> <button class="btn btn-primary navbar-btn navbar-right" type="button">Logout </button></a>
 
